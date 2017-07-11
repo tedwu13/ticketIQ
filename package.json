@@ -1,0 +1,17 @@
+{
+  "name": "news_api",
+  "version": "1.0.0",
+  "description": "Api aggregator for all tickets",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Ted Wu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "lodash": "^4.17.4",
+    "morgan": "^1.8.2",
+    "request": "^2.81.0"
+  }
+}
