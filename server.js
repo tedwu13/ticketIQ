@@ -24,7 +24,9 @@ app.get('/events', function(req, res){
         'json': true,
       }, function(err, response, body){
         if(err) return callback(err);
-        data.push(body);
+
+        data.push({"seatgeek": body.events });
+
         callback();
       });
     },
@@ -34,8 +36,7 @@ app.get('/events', function(req, res){
         'json': true,
       }, function(err, response, body) {
         if(err) return callback(err);
-        console.log("body", body);
-        data.push(body);
+        data.push({"ticketmaster": body._embedded.events});
         callback();
       })
     }
@@ -43,8 +44,7 @@ app.get('/events', function(req, res){
   ], function(err) {
     //function gets called after apis are being called
     if(err) { console.log(err); };
-    res.json({});
-    console.log("SHOWING RESULTS", data);
+    res.json({ data });
   });
 
 // https://api.seatgeek.com/2/events?client_id=MYCLIENTID&client_secret=MYCLIENTSECRET
