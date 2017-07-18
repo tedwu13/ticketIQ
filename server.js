@@ -1,19 +1,28 @@
-var express = require('express');
-var morgan  = require('morgan');
-var dotenv = require('dotenv').config();
-var async = require('async');
-var request = require('request');
-var _ = require('lodash');
+const express = require('express');
+const morgan  = require('morgan');
+const dotenv = require('dotenv').config();
+const async = require('async');
+const request = require('request');
+const _ = require('lodash');
+const utils = require("./helpers/parseEvents");
 
-var app = express();
+const app = express();
 app.use(morgan('dev'));
 
-// app.get('/', function(req, res) {
-//   res.json({});
-// });
+app.get('/taxonomies', function(req, res) {
+  const seatgeekUrl = process.env.SEATGEEK_TAXONOMIES_URL;
+  request.get({
+    'url': seatgeekUrl,
+    'json': true,
+  }, function(err, response, body){
+    console.log("body", body.taxonomies);
+    taxonomies = utils.getTaxonomies(body.taxonomies);   
+    res.json({ taxonomies });
+  });
+});
 
 app.get('/events', function(req, res){
-  const seatgeekUrl = process.env.SEATGEEK_URL;
+  const seatgeekUrl = process.env.SEATGEEK_EVENT_URL;
   const ticketmasterUrl = process.env.TICKETMASTER_URL;
 
   var data = [];
@@ -25,8 +34,9 @@ app.get('/events', function(req, res){
       }, function(err, response, body){
         if(err) return callback(err);
 
-        data.push({"seatgeek": body.events });
+        utils.parseSeatGeek(body.events);
 
+        data.push({"seatgeek": body.events });
         callback();
       });
     },
@@ -36,6 +46,8 @@ app.get('/events', function(req, res){
         'json': true,
       }, function(err, response, body) {
         if(err) return callback(err);
+
+        utils.parseTicketMaster(body._embedded.events);
         data.push({"ticketmaster": body._embedded.events});
         callback();
       })
