@@ -9,7 +9,7 @@ exports.parseTicketMaster = (data) => {
 
 exports.getTaxonomies = (taxonomies) => taxonomies.map(taxonomy => {
   const obj = {};
-  obj[taxonomy.slug] = taxonomy.name;
+  obj[taxonomy.slug] = { 'name' : taxonomy.name, 'id': taxonomy.id };
   return obj;
 });
 
