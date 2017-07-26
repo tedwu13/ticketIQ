@@ -15,16 +15,16 @@ app.get('/taxonomies', function(req, res) {
     'url': seatgeekUrl,
     'json': true,
   }, function(err, response, body){
-    console.log("body", body.taxonomies);
     taxonomies = utils.getTaxonomies(body.taxonomies);   
     res.json({ taxonomies });
   });
 });
 
 app.get('/events', function(req, res){
-  const seatgeekUrl = process.env.SEATGEEK_EVENT_URL;
+  let seatgeekUrl = process.env.SEATGEEK_EVENT_URL;
   const ticketmasterUrl = process.env.TICKETMASTER_URL;
 
+  seatgeekUrl += "&per_page=2000&sort=score.desc&average_price.gte=50&highest_price.lte=1500&taxonomies.name=sports";
   var data = [];
   async.parallel([
     function(callback) {
@@ -33,10 +33,9 @@ app.get('/events', function(req, res){
         'json': true,
       }, function(err, response, body){
         if(err) return callback(err);
-
-        utils.parseSeatGeek(body.events);
-
-        data.push({"seatgeek": body.events });
+        // utils.parseSeatGeek(body.events, req);
+        console.log(utils.parseSeatGeek(body.events, req).length);
+        data.push({"seatgeek": utils.parseSeatGeek(body.events, req) });
         callback();
       });
     },
@@ -47,8 +46,8 @@ app.get('/events', function(req, res){
       }, function(err, response, body) {
         if(err) return callback(err);
 
-        utils.parseTicketMaster(body._embedded.events);
-        data.push({"ticketmaster": body._embedded.events});
+        utils.parseTicketMaster(body._embedded.events, req);
+        // data.push({"ticketmaster": body._embedded.events});
         callback();
       })
     }
@@ -58,9 +57,6 @@ app.get('/events', function(req, res){
     if(err) { console.log(err); };
     res.json({ data });
   });
-
-// https://api.seatgeek.com/2/events?client_id=MYCLIENTID&client_secret=MYCLIENTSECRET
-
 });
 
 
