@@ -25,7 +25,6 @@ exports.parseSeatGeek = (data, req) => {
 }
 
 exports.parseTicketMaster = (data, req) => {
-  // console.log(req);
 }
 
 exports.getTaxonomies = (taxonomies) => taxonomies.map(taxonomy => {

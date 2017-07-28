@@ -28,7 +28,7 @@ app.get('/events', function(req, res){
   seatgeekUrl += "&sort=datetime_utc.asc";
   seatgeekUrl += "&lowest_price.gte=20";
   seatgeekUrl += "&average_price.lte=1000";
-  seatgeekUrl += "&taxonomies.name=concert";
+  seatgeekUrl += "&taxonomies.name=" + req.query.category;
   // seatgeekUrl += "&postal_code=94108";
   // seatgeekUrl += "&taxonomies.name=" + req.query.category;
   seatgeekUrl += "&postal_code=" + req.query.zipCode;
