@@ -24,13 +24,15 @@ app.get('/events', function(req, res){
   let seatgeekUrl = process.env.SEATGEEK_EVENT_URL;
   const ticketmasterUrl = process.env.TICKETMASTER_URL;
 
-  seatgeekUrl += "&per_page=2000";
+  seatgeekUrl += "&per_page=1000";
   seatgeekUrl += "&sort=datetime_utc.asc";
-  seatgeekUrl += "&lowest_price.gte=10";
+  seatgeekUrl += "&lowest_price.gte=20";
   seatgeekUrl += "&average_price.lte=1000";
-  seatgeekUrl += "&taxonomies.name=" + req.query.category;
-  seatgeekUrl += "&postal_code=94108";
-  var data = [];
+  seatgeekUrl += "&taxonomies.name=concert";
+  // seatgeekUrl += "&postal_code=94108";
+  // seatgeekUrl += "&taxonomies.name=" + req.query.category;
+  seatgeekUrl += "&postal_code=" + req.query.zipCode;
+  let data;
   async.parallel([
     function(callback) {
       request.get({
@@ -40,7 +42,7 @@ app.get('/events', function(req, res){
         if(err) return callback(err);
         // utils.parseSeatGeek(body.events, req);
         console.log("Length", utils.parseSeatGeek(body.events, req).length);
-        data.push({"seatgeek": utils.parseSeatGeek(body.events, req) });
+        data = utils.parseSeatGeek(body.events, req);
         callback();
       });
     },
@@ -51,7 +53,7 @@ app.get('/events', function(req, res){
       }, function(err, response, body) {
         if(err) return callback(err);
 
-        utils.parseTicketMaster(body._embedded.events, req);
+        // utils.parseTicketMaster(body._embedded.events, req);
         // data.push({"ticketmaster": body._embedded.events});
         callback();
       })
@@ -60,7 +62,14 @@ app.get('/events', function(req, res){
   ], function(err) {
     //function gets called after apis are being called
     if(err) { console.log(err); };
-    res.json({ data });
+    if(data.length <= 9) { 
+      console.log("Data", data.length);
+      res.json({ data });
+    } else {
+      data = _.slice(data, 0, 9);
+      res.json({ data });
+    };
+
   });
 });
 
