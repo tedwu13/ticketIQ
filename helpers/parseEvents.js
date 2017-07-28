@@ -1,11 +1,27 @@
 const _ = require('lodash');
 
 exports.parseSeatGeek = (data, req) => {
-  var filteredData = _.filter(data, function(data) {
-    return data.popularity > 0.75; 
-  });
-  return filteredData;
-}//venue: { postal_code : req.query.zipCode}, taxonomies: { name : req.query.category },
+  // let filteredData = _.filter(data, function(data) {
+  //   return data.popularity > 0.80; 
+  // });
+
+  let events = [];
+  _.map(data, function(data) {
+    let eventObj = {
+      'image': data.image,
+      'name': data.short_title,
+      'popularity': data.popularity,
+      'stats': data.stats,
+      'type': data.type,
+      'url': data.url,
+    }
+    events.push(eventObj);
+  })
+
+  console.log(events);
+
+  return events;
+}
 
 exports.parseTicketMaster = (data, req) => {
   // console.log(req);
@@ -17,3 +33,17 @@ exports.getTaxonomies = (taxonomies) => taxonomies.map(taxonomy => {
   return obj;
 });
 
+// function distance(lat1, lon1, lat2, lon2) {
+//   lat1 = parseFloat(lat1);
+//   lat2 = parseFloat(lat2);
+//   lon1 = parseFloat(lon1);
+//   lon2 = parseFloat(lon2);
+//   console.log("calc distance", lat1, lat2, lon1, lon2);
+//   var p = 0.017453292519943295;    // Math.PI / 180
+//   var c = Math.cos;
+//   var a = 0.5 - c((lat2 - lat1) * p)/2 +
+//           c(lat1 * p) * c(lat2 * p) *
+//           (1 - c((lon2 - lon1) * p))/2;
+
+//   return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+// }

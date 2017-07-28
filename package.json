@@ -1,5 +1,5 @@
 {
-  "name": "news_api",
+  "name": "ticketIQ",
   "version": "1.0.0",
   "description": "Api aggregator for all tickets",
   "main": "server.js",

@@ -24,7 +24,14 @@ app.get('/events', function(req, res){
   let seatgeekUrl = process.env.SEATGEEK_EVENT_URL;
   const ticketmasterUrl = process.env.TICKETMASTER_URL;
 
-  seatgeekUrl += "&per_page=2000&sort=score.desc&average_price.gte=50&highest_price.lte=1500&taxonomies.name=sports";
+  seatgeekUrl += "&per_page=2000";
+  seatgeekUrl += "&sort=score.desc";
+  seatgeekUrl += "&lowest_price.gte=10";
+  seatgeekUrl += "&highest_price.lte" + req.query.highest_price;
+  seatgeekUrl += "&taxonomies.name=" + req.query.category;
+  // seatgeekUrl += "&geoip=true";
+  seatgeekUrl += "&postal_code=60651";
+  // seatgeekUrl += "&range=50mi";
   var data = [];
   async.parallel([
     function(callback) {
