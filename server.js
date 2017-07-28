@@ -25,13 +25,11 @@ app.get('/events', function(req, res){
   const ticketmasterUrl = process.env.TICKETMASTER_URL;
 
   seatgeekUrl += "&per_page=2000";
-  seatgeekUrl += "&sort=score.desc";
+  seatgeekUrl += "&sort=datetime_utc.asc";
   seatgeekUrl += "&lowest_price.gte=10";
-  seatgeekUrl += "&highest_price.lte" + req.query.highest_price;
+  seatgeekUrl += "&average_price.lte=1000";
   seatgeekUrl += "&taxonomies.name=" + req.query.category;
-  // seatgeekUrl += "&geoip=true";
-  seatgeekUrl += "&postal_code=60651";
-  // seatgeekUrl += "&range=50mi";
+  seatgeekUrl += "&postal_code=94108";
   var data = [];
   async.parallel([
     function(callback) {
@@ -41,7 +39,7 @@ app.get('/events', function(req, res){
       }, function(err, response, body){
         if(err) return callback(err);
         // utils.parseSeatGeek(body.events, req);
-        console.log(utils.parseSeatGeek(body.events, req).length);
+        console.log("Length", utils.parseSeatGeek(body.events, req).length);
         data.push({"seatgeek": utils.parseSeatGeek(body.events, req) });
         callback();
       });

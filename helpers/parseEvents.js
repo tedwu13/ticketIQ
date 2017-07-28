@@ -1,24 +1,25 @@
 const _ = require('lodash');
 
 exports.parseSeatGeek = (data, req) => {
-  // let filteredData = _.filter(data, function(data) {
-  //   return data.popularity > 0.80; 
-  // });
+  let filteredData = _.filter(data, function(data) {
+    return data.popularity > 0.70; 
+  });
 
   let events = [];
-  _.map(data, function(data) {
+  _.map(filteredData, function(data) {
     let eventObj = {
       'image': data.image,
       'name': data.short_title,
       'popularity': data.popularity,
+      'score': data.score,
       'stats': data.stats,
+      'local_time': data.datetime_local,
       'type': data.type,
+      'venue': data.venue,
       'url': data.url,
     }
     events.push(eventObj);
   })
-
-  console.log(events);
 
   return events;
 }
