@@ -21,6 +21,7 @@ exports.parseSeatGeek = (data, req) => {
     };
     events.push(eventObj);
   })
+  console.log(events);
   return events;
 }
 
@@ -32,59 +33,6 @@ exports.getTaxonomies = (taxonomies) => taxonomies.map(taxonomy => {
   obj[taxonomy.slug] = { 'name' : taxonomy.name, 'id': taxonomy.id };
   return obj;
 });
-
-exoports.parseToMessengerFormat = (events) => {
-  let jsonElements = [];
-  const maxSubtitleLength = 80; //max subtitle length
-  const maxTitleLength = 40; // max title length
-  const maxGalleryItems = 9; //max Gallery items length
-  _.forEach(events, function(obj, id) {
-    console.log(obj);
-    // if (obj.description.length > maxSubtitleLength) {
-    //   obj.description = obj.description.substring(0, maxSubtitleLength);
-    // } 
-    // if (obj.name.length > maxTitleLength) {
-    //   obj.name = obj.name.substring(0, maxTitleLength);
-    // }
-    // var messengerObj = {
-    //   "title": obj.name,
-    //   "image_url": "https://www.fortlewis.edu/portals/165/icons/news-features.png",
-    //   "subtitle": obj.description,
-    //   "buttons": [
-    //     {
-    //       "type":"web_url",
-    //       "url": obj.url,
-    //       "title":"Go to URL"
-    //     },
-    //   ]
-    // }
-    // jsonElements.push(messengerObj);
-  });
-
-  if (jsonElements.length > 0) {
-    res.json({
-      "messages": [
-          {
-            "attachment":{
-              "type":"template",
-              "payload":{
-                "template_type":"generic",
-                "elements": elements
-              }
-            }
-          }
-        ]
-    });
-  }
-  else {
-    res.json({
-     "messages": [
-       {"text": "Sorry I don't have any results for you"},
-     ]
-    });
-
-  }
-}
 
 const distance = (lat1, lon1, lat2, lon2) => {
   const p = 0.017453292519943295;

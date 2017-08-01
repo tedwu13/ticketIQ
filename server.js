@@ -29,9 +29,9 @@ app.get('/events', function(req, res){
   seatgeekUrl += "&lowest_price.gte=20";
   seatgeekUrl += "&average_price.lte=1000";
   seatgeekUrl += "&taxonomies.name=" + req.query.category;
-  // seatgeekUrl += "&postal_code=94108";
-  // seatgeekUrl += "&taxonomies.name=" + req.query.category;
   seatgeekUrl += "&postal_code=" + req.query.zipCode;
+  // seatgeekUrl += "&postal_code=94108";
+  // seatgeekUrl += "&taxonomies.name=concert";
   let data;
   async.parallel([
     function(callback) {
@@ -40,7 +40,6 @@ app.get('/events', function(req, res){
         'json': true,
       }, function(err, response, body){
         if(err) return callback(err);
-        // utils.parseSeatGeek(body.events, req);
         console.log("Length", utils.parseSeatGeek(body.events, req).length);
         data = utils.parseSeatGeek(body.events, req);
         callback();
@@ -62,16 +61,63 @@ app.get('/events', function(req, res){
   ], function(err) {
     //function gets called after apis are being called
     if(err) { console.log(err); };
-    if(data.length <= 9) { 
-      console.log("Data", data.length);
-      res.json({ data });
-    } else {
-      data = _.slice(data, 0, 9);
-      res.json({ data });
-    };
+    else { res.json({ data }) };
 
   });
 });
+
+
+const parseToMessenger = (events) => {
+  let jsonElements = [];
+  const maxSubtitleLength = 80; //max subtitle length
+  const maxTitleLength = 40; // max title length
+  const maxGalleryItems = 9; //max Gallery items length
+  _.forEach(events, function(obj, id) {
+    console.log(obj, id);
+    // if (obj.description.length > maxSubtitleLength) {
+    //   obj.description = obj.description.substring(0, maxSubtitleLength);
+    // } 
+    // if (obj.name.length > maxTitleLength) {
+    //   obj.name = obj.name.substring(0, maxTitleLength);
+    // }
+    // var messengerObj = {
+    //   "title": obj.name,
+    //   "image_url": "https://www.fortlewis.edu/portals/165/icons/news-features.png",
+    //   "subtitle": obj.description,
+    //   "buttons": [
+    //     {
+    //       "type":"web_url",
+    //       "url": obj.url,
+    //       "title":"Go to URL"
+    //     },
+    //   ]
+    // }
+    // jsonElements.push(messengerObj);
+  });
+
+  if (jsonElements.length > 0 && jsonElements.length < 9) {
+    res.json({
+      "messages": [
+          {
+            "attachment":{
+              "type":"template",
+              "payload":{
+                "template_type":"generic",
+                "elements": elements
+              }
+            }
+          }
+        ]
+    });
+  }
+  else {
+    res.json({
+     "messages": [
+       {"text": "Sorry I don't have any results for you"},
+     ]
+    });
+  }
+}
 
 
 var port = process.env.PORT || 8000;
