@@ -9,4 +9,5 @@ echo Storing Commit Message As "$*"
 git status
 git add -A
 git commit -m "$*"
-
+git push origin master
+git push heroku master
