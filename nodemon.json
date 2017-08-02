@@ -1,0 +1,16 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules"
+  ],
+  "verbose": true,
+  "execMap": {
+    "js": "node --harmony_destructing"
+  },
+  "env": {
+    "NODE_ENV": "development",
+    "MONGODB_URI": "mongodb://fakemongodb.io"
+  },
+  "ext": "js json yaml"
+}
