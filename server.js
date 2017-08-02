@@ -22,7 +22,7 @@ app.get('/taxonomies', function(req, res) {
 
 app.get('/events', function(req, res){
   let seatgeekUrl = process.env.SEATGEEK_EVENT_URL;
-  const ticketmasterUrl = process.env.TICKETMASTER_URL;
+  let ticketmasterUrl = process.env.TICKETMASTER_URL;
 
   seatgeekUrl += "&per_page=1000";
   seatgeekUrl += "&sort=datetime_utc.asc";
@@ -30,8 +30,6 @@ app.get('/events', function(req, res){
   seatgeekUrl += "&average_price.lte=600";
   seatgeekUrl += "&taxonomies.name=" + req.query.category;
   seatgeekUrl += "&postal_code=" + req.query.zipCode;
-  // seatgeekUrl += "&postal_code=94108";
-  // seatgeekUrl += "&taxonomies.name=concert";
 
   let hi;
   async.parallel([
