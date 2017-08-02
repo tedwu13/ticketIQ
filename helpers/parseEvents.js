@@ -3,7 +3,7 @@ const _ = require('lodash');
 exports.parseSeatGeek = (data, req) => {
   let events = [];
   const popularEvents = _.filter(data, function(x) {
-    return x.popularity >= 0.90 && x.score >= 0.75;
+    return x.popularity >= 0.75 && x.score >= 0.75;
   })
 
   _.map(popularEvents, function(data) {
@@ -57,8 +57,8 @@ exports.parseToMessenger = (events) => {
     }
     jsonElements.push(messengerObj);
   });
-
-  if (jsonElements.length > 0 && jsonElements.length < 9) {
+  let topEvents = jsonElements.slice(0, 9);
+  if (topEvents.length > 0 && topEvents.length < 10) {
     console.log("more than 0 and 9 elements");
     message = {
       "messages": [
@@ -67,7 +67,7 @@ exports.parseToMessenger = (events) => {
             "type":"template",
             "payload":{
               "template_type":"generic",
-              "elements": jsonElements
+              "elements": topEvents
             }
           }
         }
