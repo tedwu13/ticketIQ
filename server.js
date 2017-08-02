@@ -33,7 +33,7 @@ app.get('/events', function(req, res){
   // seatgeekUrl += "&postal_code=94108";
   // seatgeekUrl += "&taxonomies.name=concert";
 
-  let data;
+  let hi;
   async.parallel([
     function(callback) {
       request.get({
@@ -51,7 +51,6 @@ app.get('/events', function(req, res){
         'json': true,
       }, function(err, response, body) {
         if(err) return callback(err);
-
         // utils.parseTicketMaster(body._embedded.events, req);
         // data.push({"ticketmaster": body._embedded.events});
         callback();
@@ -61,8 +60,7 @@ app.get('/events', function(req, res){
   ], function(err) {
     //function gets called after apis are being called
     if(err) { console.log(err); };
-    // console.log(data);
-    res.json({ data });
+    res.json(data);
 
   });
 });
