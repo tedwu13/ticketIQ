@@ -21,6 +21,7 @@ exports.parseSeatGeek = (data, req) => {
     };
     events.push(eventObj);
   })
+  console.log(events[0]);
   return events;
 }
 
@@ -46,13 +47,17 @@ exports.parseToMessenger = (events) => {
     let messengerObj = {
       "title": obj.name,
       "image_url": obj.image,
-      "subtitle": obj.venue.name,
+      "subtitle": "Venue: " + obj.venue.name + " Location: " + obj.venue.address,
       "buttons": [
         {
           "type":"web_url",
           "url": obj.url,
           "title":"Go to URL"
         },
+        {
+          "type":"element_share",
+          "share_contents": "SHARE BUTTON DAWG"
+        }
       ]
     }
     jsonElements.push(messengerObj);
