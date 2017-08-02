@@ -6,8 +6,17 @@ echo Starting Deploy Script
 echo Storing Commit Message As "$*"
 
 
+echo Checking git status
 git status
+
+echo Adding Code changes
 git add -A
+
+echo Committing Message
 git commit -m "$*"
+
+echo Pushing to Master
 git push origin master
-git push heroku master
+
+# echo Pushing to Heroku
+# git push heroku master
