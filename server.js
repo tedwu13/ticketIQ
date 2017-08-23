@@ -26,10 +26,10 @@ app.get('/events', function(req, res){
   let ticketmasterUrl = process.env.TICKETMASTER_URL;
 
   seatgeekUrl += "&aid=12614";
-  seatgeekUrl += "&per_page=1000";
+  seatgeekUrl += "&per_page=2000";
   seatgeekUrl += "&sort=datetime_utc.asc";
-  seatgeekUrl += "&lowest_price.gte=10";
-  seatgeekUrl += "&average_price.lte=500";
+  seatgeekUrl += "&lowest_price.gte=20";
+  seatgeekUrl += "&average_price.lte=700";
   seatgeekUrl += "&taxonomies.name=" + utils.mapCategory(req.query.category);
   seatgeekUrl += "&postal_code=" + req.query.zipCode;
 
