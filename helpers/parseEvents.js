@@ -21,11 +21,24 @@ exports.parseSeatGeek = (data, req) => {
     };
     events.push(eventObj);
   })
-  console.log(events[0]);
   return events;
 }
 
 exports.parseTicketMaster = (data, req) => {
+}
+
+exports.mapCategory = (query) => {
+  if(query === 'Concerts') {
+    query = 'concerts';
+  } else if (query === 'Sports') {
+    query = 'sports';
+  } else if (query === 'Arts') {
+    query = 'arts';
+  } else if (query === 'Comedy') {
+    query = 'comedy';
+  }
+
+  return query;
 }
 
 exports.getTaxonomies = (taxonomies) => taxonomies.map(taxonomy => {
@@ -47,16 +60,16 @@ exports.parseToMessenger = (events) => {
     let messengerObj = {
       "title": obj.name,
       "image_url": obj.image,
-      "subtitle": "Venue: " + obj.venue.name + " Location: " + obj.venue.address,
+      "subtitle": "Venue: " + obj.venue.name,
       "buttons": [
         {
           "type":"web_url",
           "url": obj.url,
-          "title":"Go to URL"
+          "title":"Buy Ticket"
         },
         {
           "type":"element_share",
-          "share_contents": "SHARE BUTTON DAWG"
+          "share_contents": "Share with Friends"
         }
       ]
     }
@@ -64,7 +77,6 @@ exports.parseToMessenger = (events) => {
   });
   let topEvents = jsonElements.slice(0, 9);
   if (topEvents.length > 0 && topEvents.length < 10) {
-    console.log("more than 0 and 9 elements");
     message = {
       "messages": [
         {

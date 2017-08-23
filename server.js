@@ -9,6 +9,7 @@ const utils = require("./helpers/parseEvents");
 const app = express();
 app.use(morgan('dev'));
 
+
 app.get('/taxonomies', function(req, res) {
   const seatgeekUrl = process.env.SEATGEEK_TAXONOMIES_URL;
   request.get({
@@ -27,9 +28,9 @@ app.get('/events', function(req, res){
   seatgeekUrl += "&aid=12614";
   seatgeekUrl += "&per_page=1000";
   seatgeekUrl += "&sort=datetime_utc.asc";
-  seatgeekUrl += "&lowest_price.gte=20";
-  seatgeekUrl += "&average_price.lte=600";
-  seatgeekUrl += "&taxonomies.name=" + req.query.category;
+  seatgeekUrl += "&lowest_price.gte=10";
+  seatgeekUrl += "&average_price.lte=500";
+  seatgeekUrl += "&taxonomies.name=" + utils.mapCategory(req.query.category);
   seatgeekUrl += "&postal_code=" + req.query.zipCode;
 
   let data;
