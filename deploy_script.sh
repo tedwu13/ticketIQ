@@ -19,4 +19,4 @@ echo Pushing to Master
 git push origin master
 
 # echo Pushing to Heroku
-# git push heroku master
+git push heroku master
