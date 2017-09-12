@@ -55,8 +55,6 @@ exports.parseToMessenger = (events) => {
   const maxSubtitleLength = 80; //max subtitle length
   const maxTitleLength = 40; // max title length
   const maxGalleryItems = 9; //max Gallery items length
-  const ticketEmoji = emoji.emojify(':admission_tickets');
-  const shareEmoji = emoji.emojify(':v');
   _.forEach(events, function(obj, id) {
     if (obj.name.length > maxTitleLength) {
       obj.name = obj.name.substring(0, maxTitleLength);
@@ -69,11 +67,11 @@ exports.parseToMessenger = (events) => {
         {
           "type":"web_url",
           "url": obj.url,
-          "title":"Buy Ticket " + ticketEmoji, 
+          "title":"Buy Ticket", 
         },
         {
           "type":"element_share",
-          "share_contents": "Share with Friends " + shareEmoji,
+          "share_contents": "Share with Friends",
         }
       ]
     }
