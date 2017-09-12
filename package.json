@@ -4,7 +4,7 @@
   "description": "Api aggregator for all tickets",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "Ted Wu",
   "license": "ISC",
