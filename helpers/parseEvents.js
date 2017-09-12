@@ -95,7 +95,12 @@ exports.parseToMessenger = (events) => {
   } else {
     message = {
       "messages": [
-        {"text": "Sorry I don't have any results for you"},
+        {"text": "Sorry I don't have any results for you" },
+        {
+          "type": "show_block",
+          "block_name": "Bot Menu",
+          "title": "Go back to Menu"
+        },
       ]
     };
   }
