@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config();
 const async = require('async');
 const request = require('request');
 const _ = require('lodash');
+const emoji = require('node-emoji');
 const utils = require("./helpers/parseEvents");
 
 const app = express();
