@@ -29,13 +29,15 @@ exports.parseTicketMaster = (data, req) => {
 
 exports.mapCategory = (query) => {
   if(query === 'Concerts') {
-    query = 'concerts';
+    query = 'concert';
   } else if (query === 'Sports') {
     query = 'sports';
-  } else if (query === 'Arts') {
-    query = 'arts';
+  } else if (query === 'Theater') {
+    query = 'theater';
   } else if (query === 'Comedy') {
     query = 'comedy';
+  } else if(query === 'Classical') {
+    query = 'classical';
   }
 
   return query;
