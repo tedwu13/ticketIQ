@@ -3,9 +3,9 @@ const _ = require('lodash');
 exports.parseSeatGeek = (data, req) => {
   let events = [];
   const popularEvents = _.filter(data, function(x) {
-    return x.popularity >= 0.5 || x.score >= 0.5;
+    return x.popularity >= 0.10 || x.score >= 0.10;
   })
-
+  console.log(data);
   _.map(popularEvents, function(data) {
     let eventObj = {
       'image': data.performers[0].image,
@@ -38,6 +38,10 @@ exports.mapCategory = (query) => {
     query = 'comedy';
   } else if(query === 'Classical') {
     query = 'classical';
+  } else if (query === 'Baseball') {
+    query = 'baseball';
+  } else if (query === 'Soccer') {
+    query = 'soccer';
   }
 
   return query;
@@ -72,7 +76,12 @@ exports.parseToMessenger = (events) => {
         {
           "type":"element_share",
           "share_contents": "Share with Friends",
-        }
+        },
+        {
+          "type": "show_block",
+          "block_name": "Bot Menu",
+          "title": "Show the block!"
+        },
       ]
     }
     jsonElements.push(messengerObj);
