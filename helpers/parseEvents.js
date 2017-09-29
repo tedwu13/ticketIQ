@@ -3,7 +3,7 @@ const _ = require('lodash');
 exports.parseSeatGeek = (data, req) => {
   let events = [];
   const popularEvents = _.filter(data, function(x) {
-    return x.popularity >= 0.10 || x.score >= 0.10;
+    return x.popularity >= 0.50 || x.score >= 0.50;
   })
   console.log(data);
   _.map(popularEvents, function(data) {
@@ -80,7 +80,7 @@ exports.parseToMessenger = (events) => {
         {
           "type": "show_block",
           "block_name": "Bot Menu",
-          "title": "Show the block!"
+          "title": "Go Back to Main Menu"
         },
       ]
     }
