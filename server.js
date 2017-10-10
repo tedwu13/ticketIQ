@@ -43,7 +43,7 @@ app.get('/events', function(req, res){
         'json': true,
       }, function(err, response, body){
         if(err) return callback(err);
-        data = utils.parseToMessenger(utils.parseSeatGeek(body.events, req));
+        data = utils.parseToMessenger(utils.parseSeatGeek(body.events));
         callback();
       });
     },

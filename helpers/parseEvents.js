@@ -1,11 +1,11 @@
 const _ = require('lodash');
+const fetch = require('isomorphic-fetch')
 
-exports.parseSeatGeek = (data, req) => {
+exports.parseSeatGeek = (data) => {
   let events = [];
   const popularEvents = _.filter(data, function(x) {
     return x.popularity >= 0.50 || x.score >= 0.50;
   })
-  console.log(data);
   _.map(popularEvents, function(data) {
     let eventObj = {
       'image': data.performers[0].image,
@@ -24,7 +24,16 @@ exports.parseSeatGeek = (data, req) => {
   return events;
 }
 
-exports.parseTicketMaster = (data, req) => {
+const fetchTickets = () => {
+  fetch('https://api.seatgeek.com/2/events?client_id=NzU0MzAwMHwxNDk5NTY5MTA2Ljk4&aid=12614')
+    .then(function(response) {
+      return response.json()
+    }).then(function(json) {
+      console.log(json.events);
+      return json.events;
+    }).catch(function(ex) {
+      console.log('parsing failed', ex)
+    })
 }
 
 exports.mapCategory = (query) => {
@@ -103,8 +112,43 @@ exports.parseToMessenger = (events) => {
     };
   } else {
     message = {
+
       "messages": [
-        {"text": "Sorry I don't have any results for you" }
+        {"text": "Sorry I don't have any results for you around your location however here are the other events and services you might be interested" },
+        {
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"generic",
+              "elements": [
+                {
+                  "title":"Popular SeatGeek Events",
+                  "image_url":"https://www.google.com/imgres?imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F701823810744487937%2FpcmlLoAd_400x400.png&imgrefurl=https%3A%2F%2Ftwitter.com%2Fseatgeek&docid=gxk08gBlvskIRM&tbnid=UgVqA4-rq8wdYM%3A&vet=10ahUKEwj4rdTh7eTWAhUirVQKHddODVsQMwg0KA4wDg..i&w=400&h=400&bih=869&biw=1744&q=seatgeek%20image%20url&ved=0ahUKEwj4rdTh7eTWAhUirVQKHddODVsQMwg0KA4wDg&iact=mrc&uact=8",
+                  "subtitle":"Top Rated Events at Seatgeek",
+                  "buttons":[
+                    {
+                      "type":"web_url",
+                      "url":"https://seatgeek.com/?aid=12614",
+                      "title":"Visit Website"
+                    }
+                  ]
+                },
+                {
+                  "title":"Popular Ticketmaster Events",
+                  "image_url":"http://is5.mzstatic.com/image/thumb/Purple118/v4/6d/4c/95/6d4c9501-8bf5-aa79-79db-aa7edeb5600d/source/1200x630bb.jpg",
+                  "subtitle":"Top Rated Events at Ticketmaster",
+                  "buttons":[
+                    {
+                      "type":"web_url",
+                      "url":"http://www.ticketmaster.com/",
+                      "title":"Visit Website"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
       ]
     };
   }
