@@ -6,9 +6,11 @@ exports.parseSeatGeek = (data) => {
   const popularEvents = _.filter(data, function(x) {
     return x.popularity >= 0.50 || x.score >= 0.50;
   })
+  console.log(data);
+
   _.map(popularEvents, function(data) {
     let eventObj = {
-      'image': data.performers[0].image,
+      'image': data.performers[0].image || 'https://botlist.co/system/BotList/Bot/logos/000/003/516/medium/EventsIQ-chatbot.jpg.jpg',
       'name': data.short_title,
       'popularity': data.popularity,
       'score': data.score,
