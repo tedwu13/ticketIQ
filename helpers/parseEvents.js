@@ -123,14 +123,19 @@ exports.parseToMessenger = (events) => {
               "elements": [
                 {
                   "title":"Popular SeatGeek Events",
-                  "image_url":"https://www.google.com/imgres?imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F701823810744487937%2FpcmlLoAd_400x400.png&imgrefurl=https%3A%2F%2Ftwitter.com%2Fseatgeek&docid=gxk08gBlvskIRM&tbnid=UgVqA4-rq8wdYM%3A&vet=10ahUKEwj4rdTh7eTWAhUirVQKHddODVsQMwg0KA4wDg..i&w=400&h=400&bih=869&biw=1744&q=seatgeek%20image%20url&ved=0ahUKEwj4rdTh7eTWAhUirVQKHddODVsQMwg0KA4wDg&iact=mrc&uact=8",
+                  "image_url":"https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwi5tumdi-XWAhXFhFQKHaoID-oQjRwIBw&url=https%3A%2F%2Fwww.crunchbase.com%2Forganization%2Fseatgeek%2Fcompetitors&psig=AOvVaw33JsIu2MzvOGiJf_TFC-PB&ust=1507691633182765",
                   "subtitle":"Top Rated Events at Seatgeek",
                   "buttons":[
                     {
                       "type":"web_url",
                       "url":"https://seatgeek.com/?aid=12614",
                       "title":"Visit Website"
-                    }
+                    },
+                    {
+                      "type": "show_block",
+                      "block_name": "Bot Menu",
+                      "title": "Go Back to Main Menu"
+                    },
                   ]
                 },
                 {
@@ -142,7 +147,12 @@ exports.parseToMessenger = (events) => {
                       "type":"web_url",
                       "url":"http://www.ticketmaster.com/",
                       "title":"Visit Website"
-                    }
+                    },
+                    {
+                      "type": "show_block",
+                      "block_name": "Bot Menu",
+                      "title": "Go Back to Main Menu"
+                    },
                   ]
                 }
               ]
